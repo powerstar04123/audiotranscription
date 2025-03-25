@@ -21,6 +21,27 @@ This is a .NET 9 Web API that provides an endpoint for transcribing WAV audio fi
    dotnet build
    dotnet run
    ```
+## App Settings
+Before start up your project, please add appsettings.json
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "AzureSpeech": {
+    "Key": "Speech Key",
+    "Region": "Speech Region"
+  },
+  "AzureStorage": {
+    "ConnectionString": "Azure Blob Stroage Connection String",
+    "ContainerName": "Storage Container Name Where wav files are stored"
+  }
+}
+```
 
 ## API Usage
 
