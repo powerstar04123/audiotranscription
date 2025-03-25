@@ -1,0 +1,6 @@
+@AudioTranscriptionApi_HostAddress = http://localhost:5286
+
+GET {{AudioTranscriptionApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
