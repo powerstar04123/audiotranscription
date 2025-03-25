@@ -6,7 +6,7 @@ This is a .NET 9 Web API that provides an endpoint for transcribing WAV audio fi
 
 - .NET 9 SDK
 - Azure Speech Service subscription
-- Azure OpenAI subscription
+- Azure Blob Stroage subscription
 
 ## Setup
 
@@ -14,7 +14,7 @@ This is a .NET 9 Web API that provides an endpoint for transcribing WAV audio fi
 2. Navigate to the project directory
 3. Update the `appsettings.json` file with your Azure credentials:
    - Azure Speech Service Key and Region
-   - Azure OpenAI Key and Endpoint
+   - Azure Blob Storage Account Key and Endpoint
 4. Run the following commands:
    ```bash
    dotnet restore
@@ -26,36 +26,35 @@ This is a .NET 9 Web API that provides an endpoint for transcribing WAV audio fi
 
 ### Transcribe Audio
 
-**Endpoint:** `POST /api/transcription/transcribe`
+**Endpoint:** `POST /api/transcription/`
 
 **Request Body:**
 ```json
 {
-    "audioFileBase64": "base64-encoded-wav-file",
-    "language": "en-US"
+    "blobName": "wav-filename",
+    "language": "es-ES"
 }
 ```
 
 **Response:**
 ```json
 {
-    "text": "Transcribed text",
-    "language": "en-US",
-    "duration": 1.234,
-    "segments": [
-        {
-            "text": "Segment text",
-            "startTime": 0.0,
-            "endTime": 1.234,
-            "confidence": 0.95
-        }
+    "transcription": [
+    {
+        "speaker": "Guest-1",
+        "timespan": {
+            "start": 17.03,
+            "end": 30.67
+        },
+        "text": "¿Saludo, es que tengo una duda para ver desde de porque si tuve un accidente, verdad, EH? ¿De desde si hice la querella, cuánto tiempo tengo para presentárselo a ustedes y poder reclamar?"
+    },
+    ...
     ]
 }
 ```
 
 ## Notes
 
-- The API accepts WAV files encoded in base64 format
-- The default language is "en-US" but can be changed in the request
+- The API accepts WAV files
+- The default language is "es-ES" but can be changed in the request
 - The API includes CORS support for cross-origin requests
-- Swagger UI is available at `/swagger` when running in development mode 

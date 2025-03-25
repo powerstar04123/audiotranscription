@@ -12,23 +12,18 @@ public class AudioProcessingService
             "converted_" + Path.GetFileName(inputFilePath)
         );
 
-        using (var reader = new WaveFileReader(inputFilePath))
+        // Use MediaFoundationReader for better format compatibility
+        using (var reader = new MediaFoundationReader(inputFilePath))
         {
-            // Check if the audio format needs conversion
-            if (NeedsConversion(reader.WaveFormat))
+            // Create a new format that's compatible with Azure Speech Service
+            var newFormat = new WaveFormat(16000, 16, 1); // 16kHz, 16-bit, mono
+
+            using (var resampler = new MediaFoundationResampler(reader, newFormat))
             {
-                // Create a new format that's compatible with Azure Speech Service
-                var newFormat = new WaveFormat(16000, 16, 1); // 16kHz, 16-bit, mono
-
-                using (var resampler = new MediaFoundationResampler(reader, newFormat))
-                {
-                    WaveFileWriter.CreateWaveFile(outputFilePath, resampler);
-                }
-                return outputFilePath;
+                WaveFileWriter.CreateWaveFile(outputFilePath, resampler);
             }
+            return outputFilePath;
         }
-
-        return inputFilePath;
     }
 
     private bool NeedsConversion(WaveFormat format)
