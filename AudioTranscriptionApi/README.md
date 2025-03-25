@@ -26,13 +26,13 @@ This is a .NET 9 Web API that provides an endpoint for transcribing WAV audio fi
 
 ### Transcribe Audio
 
-**Endpoint:** `POST /api/transcription/`
+**Endpoint:** `POST /api/transcription/transcrible`
 
 **Request Body:**
 ```json
 {
     "blobName": "wav-filename",
-    "language": "es-ES"
+    "language": "es-ES" (optional)
 }
 ```
 
